@@ -14,23 +14,20 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const IngredientSuggestionsInputSchema = z.object({
-  vendorId: z.string().describe('The ID of the vendor.'),
-  location: z.string().optional().describe('The location of the vendor (e.g., city, neighborhood).'),
-  weather: z.string().optional().describe('The current weather conditions (e.g., "Sunny, 85°F").'),
-  workingHours: z.string().optional().describe('The vendor\'s operating hours (e.g., "11am - 9pm").'),
-  pastOrders: z.array(
-    z.object({
-      ingredient: z.string(),
-      quantity: z.number(),
-      orderDate: z.string().datetime(),
-    })
-  ).optional().describe('A list of past orders for the vendor.'),
-  trendingIngredients: z.array(z.string()).optional().describe('A list of trending ingredients in the market.'),
+  location: z.string().describe('The location of the vendor (e.g., city, neighborhood).'),
+  weather: z.string().describe('The current weather conditions (e.g., "Sunny, 85°F").'),
+  workingHours: z.string().describe("The vendor's operating hours (e.g., \"11am - 9pm\")."),
+  dishes: z.array(z.string()).describe('A list of dishes the vendor wants to make.'),
 });
 export type IngredientSuggestionsInput = z.infer<typeof IngredientSuggestionsInputSchema>;
 
+const IngredientSuggestionSchema = z.object({
+  ingredient: z.string().describe('The name of the suggested ingredient.'),
+  quantity: z.string().describe('The suggested quantity for the ingredient (e.g., "10 kg", "5 liters").'),
+});
+
 const IngredientSuggestionsOutputSchema = z.object({
-  suggestions: z.array(z.string()).describe('A list of suggested ingredients for the vendor.'),
+  suggestions: z.array(IngredientSuggestionSchema).describe('A list of suggested ingredients with quantities.'),
 });
 export type IngredientSuggestionsOutput = z.infer<typeof IngredientSuggestionsOutputSchema>;
 
@@ -42,35 +39,24 @@ const prompt = ai.definePrompt({
   name: 'ingredientSuggestionsPrompt',
   input: {schema: IngredientSuggestionsInputSchema},
   output: {schema: IngredientSuggestionsOutputSchema},
-  prompt: `You are an AI assistant helping a street food vendor discover ingredients they might need.
+  prompt: `You are an AI assistant for a street food vendor. Your goal is to suggest the names and quantities of fresh ingredients needed to prepare a list of dishes.
 
-  Analyze the vendor's context to provide smart suggestions. Consider their location, the current weather, and their working hours to recommend ingredients that would sell well. For example, suggest refreshing drinks on a hot day, or hearty ingredients for a cold evening.
+  Consider the vendor's context to provide smart suggestions.
+  - Location: Affects local tastes and ingredient availability.
+  - Weather: Influences what dishes are popular (e.g., hot drinks in cold weather).
+  - Working Hours: Helps estimate the total amount of food to prepare.
 
-  Vendor ID: {{{vendorId}}}
+  Vendor Context:
   Location: {{{location}}}
   Current Weather: {{{weather}}}
   Working Hours: {{{workingHours}}}
 
-  Here are the vendor's past orders, if available:
-  {{#if pastOrders}}
-    {{#each pastOrders}}
-      - {{ingredient}} (Quantity: {{quantity}}, Date: {{orderDate}})
-    {{/each}}
-  {{else}}
-    The vendor has no past orders.
-  {{/if}}
+  Dishes to prepare:
+  {{#each dishes}}
+    - {{this}}
+  {{/each}}
 
-  Here are the current trending ingredients, if available:
-  {{#if trendingIngredients}}
-    {{#each trendingIngredients}}
-      - {{this}}
-    {{/each}}
-  {{else}}
-    There are no trending ingredients available.
-  {{/if}}
-
-  Please provide a list of ingredient suggestions based on all this information. Do not repeat ingredients that are already in past orders.
-  Return only a simple javascript array with ingredient names.
+  Based on the dishes and the context, provide a list of fresh ingredients and the estimated quantity required.
   `,
 });
 
