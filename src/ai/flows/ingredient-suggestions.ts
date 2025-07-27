@@ -15,6 +15,9 @@ import {z} from 'genkit';
 
 const IngredientSuggestionsInputSchema = z.object({
   vendorId: z.string().describe('The ID of the vendor.'),
+  location: z.string().optional().describe('The location of the vendor (e.g., city, neighborhood).'),
+  weather: z.string().optional().describe('The current weather conditions (e.g., "Sunny, 85°F").'),
+  workingHours: z.string().optional().describe('The vendor\'s operating hours (e.g., "11am - 9pm").'),
   pastOrders: z.array(
     z.object({
       ingredient: z.string(),
@@ -39,10 +42,14 @@ const prompt = ai.definePrompt({
   name: 'ingredientSuggestionsPrompt',
   input: {schema: IngredientSuggestionsInputSchema},
   output: {schema: IngredientSuggestionsOutputSchema},
-  prompt: `You are an AI assistant helping street food vendors discover ingredients they might need.
+  prompt: `You are an AI assistant helping a street food vendor discover ingredients they might need.
 
-  Based on their past orders and current market trends, suggest a list of ingredients that the vendor should consider ordering.
-  The vendor ID is: {{{vendorId}}}.
+  Analyze the vendor's context to provide smart suggestions. Consider their location, the current weather, and their working hours to recommend ingredients that would sell well. For example, suggest refreshing drinks on a hot day, or hearty ingredients for a cold evening.
+
+  Vendor ID: {{{vendorId}}}
+  Location: {{{location}}}
+  Current Weather: {{{weather}}}
+  Working Hours: {{{workingHours}}}
 
   Here are the vendor's past orders, if available:
   {{#if pastOrders}}
@@ -62,7 +69,7 @@ const prompt = ai.definePrompt({
     There are no trending ingredients available.
   {{/if}}
 
-  Please provide a list of ingredient suggestions based on this information.  Do not repeat ingredients that are already in past orders.
+  Please provide a list of ingredient suggestions based on all this information. Do not repeat ingredients that are already in past orders.
   Return only a simple javascript array with ingredient names.
   `,
 });

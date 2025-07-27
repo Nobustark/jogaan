@@ -25,7 +25,8 @@ import {
   Wallet, 
   Bike,
   Lightbulb,
-  User 
+  User,
+  ShoppingCart
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { UserNav } from "@/components/user-nav";
@@ -39,6 +40,7 @@ const iconMap: { [key: string]: LucideIcon } = {
   Bike,
   Lightbulb,
   User,
+  ShoppingCart
 };
 
 

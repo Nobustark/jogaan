@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Edit, PlusCircle, Trash2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 type Product = {
   id: string;
@@ -73,6 +74,47 @@ const initialProducts: Product[] = [
 export default function SupplierDashboard() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const { toast } = useToast();
+
+  const [newProductName, setNewProductName] = useState("");
+  const [newProductDescription, setNewProductDescription] = useState("");
+  const [newProductPrice, setNewProductPrice] = useState("");
+  const [newProductQuantity, setNewProductQuantity] = useState("");
+
+
+  const handleAddProduct = () => {
+    if (!newProductName || !newProductPrice || !newProductQuantity) {
+      toast({
+        variant: "destructive",
+        title: "Missing Fields",
+        description: "Please fill in all required product details.",
+      });
+      return;
+    }
+
+    const newProduct: Product = {
+      id: (products.length + 1).toString(),
+      name: newProductName,
+      price: parseFloat(newProductPrice),
+      quantity: parseInt(newProductQuantity, 10),
+      description: newProductDescription,
+      imageUrl: "https://placehold.co/400x400.png",
+    };
+
+    setProducts([...products, newProduct]);
+    
+    // Reset fields and close dialog
+    setNewProductName("");
+    setNewProductDescription("");
+    setNewProductPrice("");
+    setNewProductQuantity("");
+    setDialogOpen(false);
+    
+    toast({
+      title: "Product Added",
+      description: `${newProduct.name} has been added to your listings.`,
+    });
+  };
 
   return (
     <div className="space-y-4">
@@ -98,23 +140,23 @@ export default function SupplierDashboard() {
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">Name</Label>
-                <Input id="name" defaultValue="Product Name" className="col-span-3" />
+                <Input id="name" placeholder="Product Name" className="col-span-3" value={newProductName} onChange={(e) => setNewProductName(e.target.value)} />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="description" className="text-right">Description</Label>
-                <Textarea id="description" placeholder="Type your message here." className="col-span-3" />
+                <Textarea id="description" placeholder="Describe your product" className="col-span-3" value={newProductDescription} onChange={(e) => setNewProductDescription(e.target.value)} />
               </div>
                <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="price" className="text-right">Price ($)</Label>
-                <Input id="price" type="number" defaultValue="10.00" className="col-span-3" />
+                <Input id="price" type="number" placeholder="10.00" className="col-span-3" value={newProductPrice} onChange={(e) => setNewProductPrice(e.target.value)} />
               </div>
                <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="quantity" className="text-right">Quantity</Label>
-                <Input id="quantity" type="number" defaultValue="100" className="col-span-3" />
+                <Input id="quantity" type="number" placeholder="100" className="col-span-3" value={newProductQuantity} onChange={(e) => setNewProductQuantity(e.target.value)} />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit" onClick={() => setDialogOpen(false)}>Save changes</Button>
+              <Button type="submit" onClick={handleAddProduct}>Save changes</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

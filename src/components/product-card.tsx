@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/use-cart";
 
 export type Product = {
   id: string;
@@ -16,6 +18,17 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { toast } = useToast();
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+    });
+  };
+
   return (
     <Card className="overflow-hidden transform hover:shadow-lg transition-shadow duration-300">
       <CardHeader className="p-0">
@@ -37,7 +50,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </p>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full">
+        <Button className="w-full" onClick={handleAddToCart}>
           <PlusCircle className="mr-2 h-4 w-4" /> Add to Cart
         </Button>
       </CardFooter>
