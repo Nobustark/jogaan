@@ -157,7 +157,7 @@ export default function VendorOrdersPage() {
                 <TableCell className="font-medium">{order.id}</TableCell>
                 <TableCell>{order.date}</TableCell>
                  <TableCell>{order.supplier}</TableCell>
-                <TableCell>${order.total.toFixed(2)}</TableCell>
+                <TableCell>₹{order.total.toFixed(2)}</TableCell>
                 <TableCell>{getStatusBadge(order.status)}</TableCell>
                 <TableCell className="text-right">
                   {order.status === 'delivered' && <ReviewDialog order={order} onReviewSubmit={fetchOrders} />}

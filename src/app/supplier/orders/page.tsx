@@ -90,7 +90,7 @@ export default function SupplierOrdersPage() {
                 <TableCell className="font-medium">{order.id}</TableCell>
                 <TableCell>{order.vendorName}</TableCell>
                 <TableCell>{order.date}</TableCell>
-                <TableCell>${order.total.toFixed(2)}</TableCell>
+                <TableCell>₹{order.total.toFixed(2)}</TableCell>
                 <TableCell>{getStatusBadge(order.status)}</TableCell>
                 <TableCell className="text-right space-x-2">
                    {order.status === "pending" && (

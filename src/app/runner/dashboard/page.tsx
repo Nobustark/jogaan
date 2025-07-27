@@ -61,7 +61,7 @@ export default function RunnerDashboard() {
                 {getStatusBadge(task.status)}
               </div>
               <CardDescription>
-                Delivery Fee: <span className="font-bold text-primary">${task.fee.toFixed(2)}</span>
+                Delivery Fee: <span className="font-bold text-primary">₹{task.fee.toFixed(2)}</span>
               </CardDescription>
             </CardHeader>
             <CardContent className="flex-grow space-y-4">

@@ -88,7 +88,7 @@ export default function CartPage() {
                           <p className="text-sm text-muted-foreground">{item.supplier}</p>
                         </div>
                       </TableCell>
-                      <TableCell>${item.price.toFixed(2)}</TableCell>
+                      <TableCell>₹{item.price.toFixed(2)}</TableCell>
                       <TableCell className="text-center">
                          <Input
                             type="number"
@@ -98,7 +98,7 @@ export default function CartPage() {
                             className="w-20 mx-auto"
                           />
                       </TableCell>
-                      <TableCell className="text-right font-medium">${(item.price * item.quantity).toFixed(2)}</TableCell>
+                      <TableCell className="text-right font-medium">₹{(item.price * item.quantity).toFixed(2)}</TableCell>
                       <TableCell>
                         <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
                           <Trash2 className="h-4 w-4 text-destructive"/>
@@ -120,15 +120,15 @@ export default function CartPage() {
           <CardContent className="space-y-4">
              <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>${total.toFixed(2)}</span>
+              <span>₹{total.toFixed(2)}</span>
             </div>
              <div className="flex justify-between">
               <span>Delivery Fee</span>
-              <span>$5.00</span>
+              <span>₹400.00</span>
             </div>
              <div className="flex justify-between font-bold text-lg">
               <span>Total</span>
-              <span>${(total + 5).toFixed(2)}</span>
+              <span>₹{(total + 400).toFixed(2)}</span>
             </div>
           </CardContent>
           <CardFooter>

@@ -64,7 +64,7 @@ export default function RunnerEarningsPage() {
         <Card>
           <CardHeader>
             <CardDescription>Total Earnings</CardDescription>
-            <CardTitle className="font-headline text-4xl">${totalEarnings.toFixed(2)}</CardTitle>
+            <CardTitle className="font-headline text-4xl">₹{totalEarnings.toFixed(2)}</CardTitle>
           </CardHeader>
         </Card>
          <Card>
@@ -76,7 +76,7 @@ export default function RunnerEarningsPage() {
          <Card>
           <CardHeader>
             <CardDescription>Average Fee</CardDescription>
-            <CardTitle className="font-headline text-4xl">${averageFee.toFixed(2)}</CardTitle>
+            <CardTitle className="font-headline text-4xl">₹{averageFee.toFixed(2)}</CardTitle>
           </CardHeader>
         </Card>
       </div>
@@ -128,7 +128,7 @@ export default function RunnerEarningsPage() {
                  <TableRow key={task.id}>
                     <TableCell>{task.date}</TableCell>
                     <TableCell>{task.orderId}</TableCell>
-                    <TableCell className="text-right">${task.fee.toFixed(2)}</TableCell>
+                    <TableCell className="text-right">₹{task.fee.toFixed(2)}</TableCell>
                   </TableRow>
               ))}
             </TableBody>

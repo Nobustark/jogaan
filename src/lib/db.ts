@@ -53,16 +53,16 @@ export type DeliveryTask = {
 
 
 let products: Product[] = [
-  { id: "1", name: "Fresh Tomatoes", price: 2.50, quantity: 100, imageUrl: "https://placehold.co/600x400.png", supplier: "Green Farms", description: "Locally sourced, ripe red tomatoes.", rating: 4.5, reviews: [{rating: 5, comment: "Very fresh!", vendorName: "Tasty Tacos Stand", date: "2024-07-29"}] },
-  { id: "2", name: "Red Onions", price: 1.75, quantity: 250, imageUrl: "https://placehold.co/600x400.png", supplier: "Veggie Co.", description: "Fresh red and white onions.", rating: 4.8, reviews: [] },
-  { id: "3", name: "Basmati Rice (20kg)", price: 15.00, quantity: 50, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags).", rating: 4.2, reviews: [] },
-  { id: "4", name: "Chicken Breast (kg)", price: 8.50, quantity: 10, imageUrl: "https://placehold.co/600x400.png", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast.", rating: 4.9, reviews: [] },
-  { id: "5", name: "Garam Masala", price: 5.25, quantity: 80, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "Aromatic blend of ground spices.", rating: 4.6, reviews: [] },
-  { id: "6", name: "Canola Oil (5L)", price: 22.00, quantity: 40, imageUrl: "https://placehold.co/600x400.png", supplier: "Veggie Co.", description: "Pure canola oil for all your cooking needs.", rating: 4.0, reviews: [] },
-  { id: "7", name: "Potatoes (bag)", price: 5.00, quantity: 150, imageUrl: "https://placehold.co/600x400.png", supplier: "Green Farms", description: "Versatile potatoes, perfect for fries or curries.", rating: 4.3, reviews: [] },
-  { id: "8", name: "Paneer (kg)", price: 9.00, quantity: 30, imageUrl: "https://placehold.co/600x400.png", supplier: "Dairy King", description: "Fresh, soft paneer for your vegetarian dishes.", rating: 4.7, reviews: [] },
-  { id: "9", name: "All-Purpose Flour (5kg)", price: 6.50, quantity: 100, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "High-quality all-purpose flour.", rating: 4.5, reviews: [] },
-  { id: "10", name: "Lamb Mince (kg)", price: 12.00, quantity: 25, imageUrl: "https://placehold.co/600x400.png", supplier: "The Meat Locker", description: "Freshly ground lamb mince.", rating: 4.8, reviews: [] },
+  { id: "1", name: "Fresh Tomatoes", price: 200, quantity: 100, imageUrl: "https://placehold.co/600x400/F44336/FFFFFF.png?text=Tomatoes", supplier: "Green Farms", description: "Locally sourced, ripe red tomatoes.", rating: 4.5, reviews: [{rating: 5, comment: "Very fresh!", vendorName: "Tasty Tacos Stand", date: "2024-07-29"}] },
+  { id: "2", name: "Red Onions", price: 140, quantity: 250, imageUrl: "https://placehold.co/600x400/9C27B0/FFFFFF.png?text=Onions", supplier: "Veggie Co.", description: "Fresh red and white onions.", rating: 4.8, reviews: [] },
+  { id: "3", name: "Basmati Rice (20kg)", price: 1200, quantity: 50, imageUrl: "https://placehold.co/600x400/795548/FFFFFF.png?text=Rice", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags).", rating: 4.2, reviews: [] },
+  { id: "4", name: "Chicken Breast (kg)", price: 680, quantity: 10, imageUrl: "https://placehold.co/600x400/FFC107/FFFFFF.png?text=Chicken", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast.", rating: 4.9, reviews: [] },
+  { id: "5", name: "Garam Masala", price: 420, quantity: 80, imageUrl: "https://placehold.co/600x400/FF5722/FFFFFF.png?text=Spices", supplier: "Spice & Grain", description: "Aromatic blend of ground spices.", rating: 4.6, reviews: [] },
+  { id: "6", name: "Canola Oil (5L)", price: 1760, quantity: 40, imageUrl: "https://placehold.co/600x400/CDDC39/000000.png?text=Oil", supplier: "Veggie Co.", description: "Pure canola oil for all your cooking needs.", rating: 4.0, reviews: [] },
+  { id: "7", name: "Potatoes (bag)", price: 400, quantity: 150, imageUrl: "https://placehold.co/600x400/9E9E9E/FFFFFF.png?text=Potatoes", supplier: "Green Farms", description: "Versatile potatoes, perfect for fries or curries.", rating: 4.3, reviews: [] },
+  { id: "8", name: "Paneer (kg)", price: 720, quantity: 30, imageUrl: "https://placehold.co/600x400/E0E0E0/000000.png?text=Paneer", supplier: "Dairy King", description: "Fresh, soft paneer for your vegetarian dishes.", rating: 4.7, reviews: [] },
+  { id: "9", name: "All-Purpose Flour (5kg)", price: 520, quantity: 100, imageUrl: "https://placehold.co/600x400/BDBDBD/000000.png?text=Flour", supplier: "Spice & Grain", description: "High-quality all-purpose flour.", rating: 4.5, reviews: [] },
+  { id: "10", name: "Lamb Mince (kg)", price: 960, quantity: 25, imageUrl: "https://placehold.co/600x400/607D8B/FFFFFF.png?text=Lamb", supplier: "The Meat Locker", description: "Freshly ground lamb mince.", rating: 4.8, reviews: [] },
 ];
 
 let orders: Order[] = [
@@ -70,11 +70,11 @@ let orders: Order[] = [
     id: "ORD-001",
     vendorName: "Tasty Tacos Stand",
     date: "2024-07-28",
-    total: 45.75,
+    total: 3660,
     status: "delivered",
     items: [
-      { id: "1", name: "Fresh Tomatoes", quantity: 5, price: 2.50 },
-      { id: "2", name: "Onions", quantity: 10, price: 1.75 },
+      { id: "1", name: "Fresh Tomatoes", quantity: 5, price: 200 },
+      { id: "2", name: "Onions", quantity: 10, price: 140 },
     ],
     supplier: "Green Farms",
   },
@@ -82,11 +82,11 @@ let orders: Order[] = [
     id: "ORD-002",
     vendorName: "Noodle Nirvana",
     date: "2024-07-28",
-    total: 88.0,
+    total: 7040,
     status: "preparing",
     items: [
-      { id: "3", name: "Basmati Rice", quantity: 2, price: 15.00 },
-      { id: "6", name: "Canola Oil (5L)", quantity: 1, price: 22.00 },
+      { id: "3", name: "Basmati Rice", quantity: 2, price: 1200 },
+      { id: "6", name: "Canola Oil (5L)", quantity: 1, price: 1760 },
     ],
     supplier: "Spice & Grain",
   },
@@ -94,10 +94,10 @@ let orders: Order[] = [
     id: "ORD-003",
     vendorName: "Tasty Tacos Stand",
     date: "2024-07-29",
-    total: 25.00,
+    total: 2000,
     status: "pending",
     items: [
-      { id: "7", name: "Potatoes (bag)", quantity: 5, price: 5.00 },
+      { id: "7", name: "Potatoes (bag)", quantity: 5, price: 400 },
     ],
     supplier: "Veggie Co.",
   },
@@ -110,7 +110,7 @@ let deliveryTasks: DeliveryTask[] = [
     pickup: "The Meat Locker",
     dropoff: "Sizzling Skewers",
     status: "in_progress",
-    fee: 15.0,
+    fee: 1200,
     date: new Date().toISOString().split('T')[0],
   },
   {
@@ -119,7 +119,7 @@ let deliveryTasks: DeliveryTask[] = [
     pickup: "Green Farms",
     dropoff: "Tasty Tacos Stand",
     status: "completed",
-    fee: 7.50,
+    fee: 600,
     date: "2024-07-28",
   },
 ];

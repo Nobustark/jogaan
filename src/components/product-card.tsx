@@ -86,7 +86,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         <p className="text-xl font-bold font-headline text-primary mt-2">
-          ${product.price.toFixed(2)}
+          ₹{product.price.toFixed(2)}
         </p>
       </CardContent>
       <CardFooter className="p-4 pt-0">

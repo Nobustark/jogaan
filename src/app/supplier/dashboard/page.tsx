@@ -143,8 +143,8 @@ export default function SupplierDashboard() {
                 <Textarea id="description" placeholder="Describe your product" className="col-span-3" value={newProductDescription} onChange={(e) => setNewProductDescription(e.target.value)} />
               </div>
                <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="price" className="text-right">Price ($)</Label>
-                <Input id="price" type="number" placeholder="10.00" className="col-span-3" value={newProductPrice} onChange={(e) => setNewProductPrice(e.target.value)} />
+                <Label htmlFor="price" className="text-right">Price (₹)</Label>
+                <Input id="price" type="number" placeholder="800.00" className="col-span-3" value={newProductPrice} onChange={(e) => setNewProductPrice(e.target.value)} />
               </div>
                <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="quantity" className="text-right">Quantity</Label>
@@ -189,7 +189,7 @@ export default function SupplierDashboard() {
                      <span className="text-xs text-muted-foreground">({product.reviews.length})</span>
                    </div>
                 </TableCell>
-                <TableCell>${product.price.toFixed(2)}</TableCell>
+                <TableCell>₹{product.price.toFixed(2)}</TableCell>
                 <TableCell>
                   <Badge variant="outline">{product.quantity} in stock</Badge>
                 </TableCell>

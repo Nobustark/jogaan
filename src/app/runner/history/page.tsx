@@ -50,7 +50,7 @@ export default function RunnerHistoryPage() {
                 <TableRow key={delivery.id}>
                   <TableCell className="font-medium">{delivery.orderId}</TableCell>
                   <TableCell>{delivery.pickup} → {delivery.dropoff}</TableCell>
-                  <TableCell className="text-right font-medium text-primary">${delivery.fee.toFixed(2)}</TableCell>
+                  <TableCell className="text-right font-medium text-primary">₹{delivery.fee.toFixed(2)}</TableCell>
                 </TableRow>
               ))}
                {!deliveries.length && (
