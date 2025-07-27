@@ -82,7 +82,7 @@ export default function SupplierDashboard() {
       price: parseFloat(newProductPrice),
       quantity: parseInt(newProductQuantity, 10),
       description: newProductDescription,
-      imageUrl: "https://placehold.co/400x400.png",
+      imageUrl: "https://placehold.co/600x400.png",
       supplier: 'Veggie Co.', // Hardcoded for prototype
       rating: 0,
       reviews: [],
@@ -179,7 +179,7 @@ export default function SupplierDashboard() {
                     width={48}
                     height={48}
                     className="rounded-md object-cover"
-                    data-ai-hint="food ingredient"
+                    data-ai-hint="ingredient"
                   />
                 </TableCell>
                 <TableCell className="font-medium">{product.name}</TableCell>

@@ -48,7 +48,7 @@ export function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
-            data-ai-hint="food ingredient"
+            data-ai-hint="ingredient"
           />
         </div>
       </CardHeader>
