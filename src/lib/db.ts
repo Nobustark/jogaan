@@ -54,17 +54,16 @@ export type DeliveryTask = {
 
 let products: Product[] = [
   { id: "1", name: "Fresh Tomatoes", price: 200, quantity: 100, imageUrl: "https://images-prod.healthline.com/hlcmsresource/images/AN_images/tomatoes-1296x728-feature.jpg", supplier: "Green Farms", description: "Locally sourced, ripe red tomatoes.", rating: 4.5, reviews: [{rating: 5, comment: "Very fresh!", vendorName: "Tasty Tacos Stand", date: "2024-07-29"}] },
-  { id: "2", name: "Red Onions", price: 140, quantity: 250, imageUrl: "https://cdn.shopify.com/s/files/1/1375/4957/files/blog_img_6.jpg?v=1573206246", supplier: "Veggie Co.", description: "Fresh red and white onions.", rating: 4.8, reviews: [] },
-  { id: "3", name: "Basmati Rice (20kg)", price: 1200, quantity: 50, imageUrl: "https://flourworks.in/wp-content/uploads/2023/06/1-12.jpeg", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags).", rating: 4.2, reviews: [] },
-  { id: "4", name: "Chicken Breast (kg)", price: 680, quantity: 10, imageUrl: "https://www.nuste.in/cdn/shop/files/breastchickenBoneless.jpg?v=1711450066", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast.", rating: 4.9, reviews: [] },
+  { id: "2", name: "Red Onions", price: 140, quantity: 250, imageUrl: "red_onion.webp", supplier: "Veggie Co.", description: "Fresh red and white onions.", rating: 4.8, reviews: [] },
+  { id: "3", name: "Basmati Rice (20kg)", price: 1200, quantity: 50, imageUrl: "Basmati_rice.jpeg", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags).", rating: 4.2, reviews: [] },
+  { id: "4", name: "Chicken Breast (kg)", price: 680, quantity: 10, imageUrl: "jogaan/src/lib/breastchickenBoneless.webp", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast.", rating: 4.9, reviews: [] },
   { id: "5", name: "Garam Masala", price: 420, quantity: 80, imageUrl: "https://www.indianhealthyrecipes.com/wp-content/uploads/2023/05/garam-masala.jpg", supplier: "Spice & Grain", description: "Aromatic blend of ground spices.", rating: 4.6, reviews: [] },
   { id: "6", name: "Canola Oil (5L)", price: 1760, quantity: 40, imageUrl: "https://m.media-amazon.com/images/I/71oXNyaMnJL._UF1000,1000_QL80_.jpg", supplier: "Veggie Co.", description: "Pure canola oil for all your cooking needs.", rating: 4.0, reviews: [] },
   { id: "7", name: "Potatoes (bag)", price: 400, quantity: 150, imageUrl: "https://www.thespruce.com/thmb/nnMroQYv4CCSCR7i8Si-_MWDwnc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/how-to-harvest-potatoes-2540062-03-6ef71ddbaa974a2583d7ddf8d74f7c1e.jpg", supplier: "Green Farms", description: "Versatile potatoes, perfect for fries or curries.", rating: 4.3, reviews: [] },
   { id: "8", name: "Paneer (kg)", price: 720, quantity: 30, imageUrl: "https://www.sharmispassions.com/wp-content/uploads/2012/09/homemade-paneer.jpg", supplier: "Dairy King", description: "Fresh, soft paneer for your vegetarian dishes.", rating: 4.7, reviews: [] },
   { id: "9", name: "All-Purpose Flour (5kg)", price: 520, quantity: 100, imageUrl: "https://images-cdn.ubuy.co.in/6760ce405864515f637a6109-premium-gold-gluten-free-all-purpose.jpg", supplier: "Spice & Grain", description: "High-quality all-purpose flour.", rating: 4.5, reviews: [] },
-  { id: "10", name: "Lamb Mince (kg)", price: 960, quantity: 25, imageUrl: "https://static.freshtohome.com/cdn-cgi/image/width=600/https://static.freshtohome.com/media/catalog/product/l/a/lamb_mince_2_1.jpg", supplier: "The Meat Locker", description: "Freshly ground lamb mince.", rating: 4.8, reviews: [] },
+  { id: "10", name: "Lamb Mince (kg)", price: 960, quantity: 25, imageUrl: "https://static.freshtohome.com/cdn-cgi/image/width=600/https://static.freshtohome.com/media/catalog/product/l/a/lamb_mince_2_1.jpg", supplier: "The Meat Locker", description: "Freshly ground lamb mince.", rating: 4.8, reviews: [] },
 ];
-
 
 let orders: Order[] = [
     {
