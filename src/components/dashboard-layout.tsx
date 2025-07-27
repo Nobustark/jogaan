@@ -15,14 +15,37 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { CookingPot, LogOut } from "lucide-react";
+import { 
+  CookingPot, 
+  LogOut, 
+  LayoutDashboard, 
+  Package, 
+  ListOrdered, 
+  BarChart, 
+  Wallet, 
+  Bike,
+  Lightbulb,
+  User 
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { UserNav } from "@/components/user-nav";
+
+const iconMap: { [key: string]: LucideIcon } = {
+  LayoutDashboard,
+  Package,
+  ListOrdered,
+  BarChart,
+  Wallet,
+  Bike,
+  Lightbulb,
+  User,
+};
+
 
 type NavItem = {
   href: string;
   label: string;
-  icon: LucideIcon;
+  icon: string;
 };
 
 type DashboardLayoutProps = {
@@ -56,19 +79,22 @@ export function DashboardLayout({
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                  <Link href={item.href} legacyBehavior passHref>
-                    <SidebarMenuButton
-                      isActive={pathname === item.href}
-                      tooltip={item.label}
-                    >
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.label}</span>
-                    </SidebarMenuButton>
-                  </Link>
-                </SidebarMenuItem>
-              ))}
+              {navItems.map((item) => {
+                const Icon = iconMap[item.icon];
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <Link href={item.href} legacyBehavior passHref>
+                      <SidebarMenuButton
+                        isActive={pathname === item.href}
+                        tooltip={item.label}
+                      >
+                        {Icon && <Icon className="h-5 w-5" />}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                    </Link>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarContent>
           <SidebarFooter>

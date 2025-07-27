@@ -1,10 +1,10 @@
 import { DashboardLayout } from "@/components/dashboard-layout";
-import { LayoutDashboard, ListOrdered, Wallet, Bike } from "lucide-react";
+import { ListOrdered, Wallet, Bike } from "lucide-react";
 
 const navItems = [
-  { href: "/runner/dashboard", label: "Available Deliveries", icon: Bike },
-  { href: "/runner/history", label: "Delivery History", icon: ListOrdered },
-  { href: "/runner/earnings", label: "Earnings", icon: Wallet },
+  { href: "/runner/dashboard", label: "Available Deliveries", icon: "Bike" },
+  { href: "/runner/history", label: "Delivery History", icon: "ListOrdered" },
+  { href: "/runner/earnings", label: "Earnings", icon: "Wallet" },
 ];
 
 export default function RunnerLayout({

@@ -2,10 +2,10 @@ import { DashboardLayout } from "@/components/dashboard-layout";
 import { LayoutDashboard, Lightbulb, ListOrdered, User } from "lucide-react";
 
 const navItems = [
-  { href: "/vendor/dashboard", label: "Browse", icon: LayoutDashboard },
-  { href: "/vendor/ai-suggestions", label: "AI Suggestions", icon: Lightbulb },
-  { href: "/vendor/orders", label: "Order History", icon: ListOrdered },
-  { href: "/vendor/profile", label: "Profile", icon: User },
+  { href: "/vendor/dashboard", label: "Browse", icon: "LayoutDashboard" },
+  { href: "/vendor/ai-suggestions", label: "AI Suggestions", icon: "Lightbulb" },
+  { href: "/vendor/orders", label: "Order History", icon: "ListOrdered" },
+  { href: "/vendor/profile", label: "Profile", icon: "User" },
 ];
 
 export default function VendorLayout({
