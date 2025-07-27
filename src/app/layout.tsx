@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Jogaan Lite",
+  title: "SastaSupply",
   description:
     "A smart marketplace connecting street food vendors, suppliers, and delivery runners.",
 };

@@ -14,19 +14,17 @@ import {
   SidebarTrigger,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
-import { 
-  CookingPot, 
-  LogOut, 
-  LayoutDashboard, 
-  Package, 
-  ListOrdered, 
-  BarChart, 
-  Wallet, 
+import {
+  CookingPot,
+  LogOut,
+  LayoutDashboard,
+  Package,
+  ListOrdered,
+  Wallet,
   Bike,
   Lightbulb,
   User,
-  ShoppingCart
+  ShoppingCart,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { UserNav } from "@/components/user-nav";
@@ -35,14 +33,12 @@ const iconMap: { [key: string]: LucideIcon } = {
   LayoutDashboard,
   Package,
   ListOrdered,
-  BarChart,
   Wallet,
   Bike,
   Lightbulb,
   User,
-  ShoppingCart
+  ShoppingCart,
 };
-
 
 type NavItem = {
   href: string;
@@ -73,7 +69,7 @@ export function DashboardLayout({
               <CookingPot className="w-8 h-8 text-primary" />
               <div className="flex flex-col">
                 <h2 className="text-lg font-headline font-semibold">
-                  Jogaan Lite
+                  SastaSupply
                 </h2>
                 <p className="text-sm text-muted-foreground">{roleName} Portal</p>
               </div>

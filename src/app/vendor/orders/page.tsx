@@ -12,8 +12,20 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { Eye } from "lucide-react";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Star } from "lucide-react";
 import db, { type Order, type OrderStatus } from "@/lib/db";
+import { useToast } from "@/hooks/use-toast";
 
 const getStatusBadge = (status: OrderStatus) => {
   switch (status) {
@@ -28,6 +40,78 @@ const getStatusBadge = (status: OrderStatus) => {
     case "completed":
         return <Badge className="bg-green-600">Completed</Badge>;
   }
+};
+
+const ReviewDialog = ({ order }: { order: Order }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
+    const [review, setReview] = useState("");
+    const { toast } = useToast();
+
+    const handleSubmitReview = () => {
+        if (rating === 0) {
+            toast({
+                variant: "destructive",
+                title: "No rating selected",
+                description: "Please select a star rating to submit your review.",
+            });
+            return;
+        }
+
+        db.orders.addReview(order.id, { rating, comment: review });
+
+        toast({
+            title: "Review Submitted",
+            description: "Thank you for your feedback!",
+        });
+        setIsOpen(false);
+    };
+
+    return (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <Button size="sm" variant="outline" disabled={order.reviewSubmitted}>
+                    {order.reviewSubmitted ? "Review Submitted" : "Leave a Review"}
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Leave a review for order #{order.id}</DialogTitle>
+                    <DialogDescription>
+                        Your feedback helps suppliers improve their service.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="py-4 space-y-4">
+                    <div>
+                        <Label>Rating</Label>
+                        <div className="flex items-center gap-1 mt-2">
+                             {[1, 2, 3, 4, 5].map((star) => (
+                                <Star
+                                    key={star}
+                                    className={`w-6 h-6 cursor-pointer transition-colors ${
+                                        (hoverRating || rating) >= star
+                                            ? "text-yellow-400 fill-yellow-400"
+                                            : "text-gray-300"
+                                    }`}
+                                    onMouseEnter={() => setHoverRating(star)}
+                                    onMouseLeave={() => setHoverRating(0)}
+                                    onClick={() => setRating(star)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <Label htmlFor="review">Comments</Label>
+                        <Textarea id="review" value={review} onChange={(e) => setReview(e.target.value)} placeholder="Tell us about your experience..."/>
+                    </div>
+                </div>
+                <DialogFooter>
+                    <Button onClick={handleSubmitReview}>Submit Review</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
 };
 
 
@@ -63,7 +147,7 @@ export default function VendorOrdersPage() {
               <TableHead>Supplier</TableHead>
               <TableHead>Total</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Invoice</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -75,9 +159,7 @@ export default function VendorOrdersPage() {
                 <TableCell>${order.total.toFixed(2)}</TableCell>
                 <TableCell>{getStatusBadge(order.status)}</TableCell>
                 <TableCell className="text-right">
-                  <Button variant="outline" size="sm">
-                    <Eye className="mr-2 h-4 w-4" /> View Invoice
-                  </Button>
+                  {order.status === 'delivered' && <ReviewDialog order={order} />}
                 </TableCell>
               </TableRow>
             ))}

@@ -24,9 +24,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Edit, PlusCircle, Trash2 } from "lucide-react";
+import { Edit, PlusCircle, Trash2, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import db, { type Product } from '@/lib/db';
+
+const StarRating = ({ rating }: { rating: number }) => {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 !== 0;
+  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+  return (
+    <div className="flex items-center">
+      {[...Array(fullStars)].map((_, i) => (
+        <Star key={`full-${i}`} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+      ))}
+      {halfStar && <Star key="half" className="w-4 h-4 text-yellow-400" />}
+      {[...Array(emptyStars)].map((_, i) => (
+        <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
+      ))}
+    </div>
+  );
+};
 
 export default function SupplierDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -38,10 +56,14 @@ export default function SupplierDashboard() {
   const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductQuantity, setNewProductQuantity] = useState("");
 
-  useEffect(() => {
+  const fetchProducts = () => {
     // For this prototype, we assume the supplier is "Veggie Co."
     // In a real app, you'd get this from the user's session.
     setProducts(db.products.findMany().filter(p => p.supplier === 'Veggie Co.'));
+  }
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
 
@@ -55,16 +77,18 @@ export default function SupplierDashboard() {
       return;
     }
 
-    const newProduct = db.products.create({
+    db.products.create({
       name: newProductName,
       price: parseFloat(newProductPrice),
       quantity: parseInt(newProductQuantity, 10),
       description: newProductDescription,
       imageUrl: "https://placehold.co/400x400.png",
-      supplier: 'Veggie Co.' // Hardcoded for prototype
+      supplier: 'Veggie Co.', // Hardcoded for prototype
+      rating: 0,
+      reviews: [],
     });
 
-    setProducts(prev => [...prev, newProduct]);
+    fetchProducts();
     
     // Reset fields and close dialog
     setNewProductName("");
@@ -75,13 +99,13 @@ export default function SupplierDashboard() {
     
     toast({
       title: "Product Added",
-      description: `${newProduct.name} has been added to your listings.`,
+      description: `${newProductName} has been added to your listings.`,
     });
   };
 
   const handleDeleteProduct = (productId: string) => {
     db.products.delete(productId);
-    setProducts(prev => prev.filter(p => p.id !== productId));
+    fetchProducts();
     toast({
         title: "Product Deleted",
         description: "The product has been removed from your listings.",
@@ -139,6 +163,7 @@ export default function SupplierDashboard() {
             <TableRow>
               <TableHead className="w-[80px]">Image</TableHead>
               <TableHead>Name</TableHead>
+              <TableHead>Rating</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Quantity</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -158,6 +183,12 @@ export default function SupplierDashboard() {
                   />
                 </TableCell>
                 <TableCell className="font-medium">{product.name}</TableCell>
+                <TableCell>
+                   <div className="flex items-center gap-1">
+                     <StarRating rating={product.rating} /> 
+                     <span className="text-xs text-muted-foreground">({product.reviews.length})</span>
+                   </div>
+                </TableCell>
                 <TableCell>${product.price.toFixed(2)}</TableCell>
                 <TableCell>
                   <Badge variant="outline">{product.quantity} in stock</Badge>

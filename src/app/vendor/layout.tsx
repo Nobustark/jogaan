@@ -1,7 +1,7 @@
 
 import { DashboardLayout } from "@/components/dashboard-layout";
-import { LayoutDashboard, Lightbulb, ListOrdered, User, ShoppingCart } from "lucide-react";
 import { CartProvider } from "@/hooks/use-cart";
+import { Chatbot } from "@/components/chatbot";
 
 const navItems = [
   { href: "/vendor/dashboard", label: "Browse", icon: "LayoutDashboard" },
@@ -20,6 +20,7 @@ export default function VendorLayout({
     <CartProvider>
       <DashboardLayout navItems={navItems} role="vendor">
         {children}
+        <Chatbot />
       </DashboardLayout>
     </CartProvider>
   );

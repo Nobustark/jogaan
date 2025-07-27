@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/dashboard-layout";
-import { ListOrdered, Wallet, Bike } from "lucide-react";
+import { Chatbot } from "@/components/chatbot";
 
 const navItems = [
   { href: "/runner/dashboard", label: "Available Deliveries", icon: "Bike" },
@@ -12,5 +12,10 @@ export default function RunnerLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <DashboardLayout navItems={navItems} role="runner">{children}</DashboardLayout>;
+  return (
+    <DashboardLayout navItems={navItems} role="runner">
+      {children}
+      <Chatbot />
+    </DashboardLayout>
+  );
 }

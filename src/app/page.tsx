@@ -18,7 +18,7 @@ export default function Home() {
           <CookingPot className="h-12 w-12 text-primary-foreground" />
         </div>
         <h1 className="text-5xl md:text-6xl font-extrabold text-foreground font-headline tracking-tighter">
-          Jogaan Lite
+          SastaSupply
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
           A smart marketplace connecting street food vendors, suppliers, and

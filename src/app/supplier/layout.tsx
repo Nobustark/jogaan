@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/dashboard-layout";
-import { Package, ListOrdered } from "lucide-react";
+import { Chatbot } from "@/components/chatbot";
 
 const navItems = [
   { href: "/supplier/dashboard", label: "Listings", icon: "Package" },
@@ -11,5 +11,10 @@ export default function SupplierLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <DashboardLayout navItems={navItems} role="supplier">{children}</DashboardLayout>;
+  return (
+    <DashboardLayout navItems={navItems} role="supplier">
+      {children}
+      <Chatbot />
+    </DashboardLayout>
+  );
 }

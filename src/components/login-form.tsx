@@ -35,7 +35,7 @@ export function LoginForm({ role }: LoginFormProps) {
             <CookingPot className="h-8 w-8 text-primary-foreground" />
           </div>
           <CardTitle className="font-headline text-2xl">{roleName} Login</CardTitle>
-          <CardDescription>Enter your credentials to access your dashboard.</CardDescription>
+          <CardDescription>Enter your credentials to access the {roleName} Portal for SastaSupply.</CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
