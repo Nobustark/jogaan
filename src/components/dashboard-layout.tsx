@@ -83,15 +83,16 @@ export function DashboardLayout({
                 const Icon = iconMap[item.icon];
                 return (
                   <SidebarMenuItem key={item.href}>
-                    <Link href={item.href} legacyBehavior passHref>
-                      <SidebarMenuButton
-                        isActive={pathname === item.href}
-                        tooltip={item.label}
-                      >
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname === item.href}
+                      tooltip={item.label}
+                    >
+                      <Link href={item.href}>
                         {Icon && <Icon className="h-5 w-5" />}
                         <span>{item.label}</span>
-                      </SidebarMenuButton>
-                    </Link>
+                      </Link>
+                    </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
               })}
@@ -100,12 +101,12 @@ export function DashboardLayout({
           <SidebarFooter>
             <SidebarMenu>
               <SidebarMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                  <SidebarMenuButton>
+                <SidebarMenuButton asChild>
+                  <Link href="/">
                     <LogOut className="h-5 w-5" />
                     <span>Logout</span>
-                  </SidebarMenuButton>
-                </Link>
+                  </Link>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarFooter>
