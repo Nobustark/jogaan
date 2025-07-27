@@ -42,7 +42,7 @@ const getStatusBadge = (status: OrderStatus) => {
   }
 };
 
-const ReviewDialog = ({ order }: { order: Order }) => {
+const ReviewDialog = ({ order, onReviewSubmit }: { order: Order, onReviewSubmit: () => void }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
@@ -66,6 +66,7 @@ const ReviewDialog = ({ order }: { order: Order }) => {
             description: "Thank you for your feedback!",
         });
         setIsOpen(false);
+        onReviewSubmit();
     };
 
     return (
@@ -159,7 +160,7 @@ export default function VendorOrdersPage() {
                 <TableCell>${order.total.toFixed(2)}</TableCell>
                 <TableCell>{getStatusBadge(order.status)}</TableCell>
                 <TableCell className="text-right">
-                  {order.status === 'delivered' && <ReviewDialog order={order} />}
+                  {order.status === 'delivered' && <ReviewDialog order={order} onReviewSubmit={fetchOrders} />}
                 </TableCell>
               </TableRow>
             ))}
