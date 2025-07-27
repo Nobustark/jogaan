@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CookingPot, Building, Bike } from "lucide-react";
+import { ArrowRight, CookingPot, Building, Bike, Bot } from "lucide-react";
 
 export default function Home() {
   return (
@@ -21,12 +21,12 @@ export default function Home() {
           SastaSupply
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          A smart marketplace connecting street food vendors, suppliers, and
+          The smart, AI-powered marketplace connecting street food vendors, suppliers, and
           delivery runners. Streamline your operations and grow your business.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mb-16">
         <Card className="flex flex-col transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-2xl rounded-xl">
           <CardHeader className="items-center text-center">
             <div className="p-3 bg-secondary rounded-full mb-2">
@@ -93,6 +93,19 @@ export default function Home() {
           </CardFooter>
         </Card>
       </div>
+      
+       <div className="text-center w-full max-w-4xl p-8 bg-card rounded-2xl shadow-lg border">
+          <div className="inline-block bg-primary text-primary-foreground p-4 rounded-full mb-4 shadow-lg">
+            <Bot className="h-10 w-10" />
+          </div>
+          <h2 className="text-3xl font-bold font-headline text-foreground">Meet SastaBot, Your AI Assistant</h2>
+          <p className="mt-3 text-base text-muted-foreground max-w-xl mx-auto">
+            Get instant answers to your questions, receive smart ingredient suggestions,
+            and manage your operations more efficiently with our friendly AI-powered chatbot, available 24/7.
+          </p>
+          <Button size="lg" className="mt-6">Learn More</Button>
+      </div>
+
     </main>
   );
 }
