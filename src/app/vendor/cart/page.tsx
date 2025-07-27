@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Trash2, ShoppingCart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import db from "@/lib/db";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, total, clearCart } = useCart();
@@ -23,6 +24,28 @@ export default function CartPage() {
       });
       return;
     }
+
+    // For this prototype, we'll group items by supplier and create one order per supplier
+    const ordersBySupplier: { [key: string]: typeof cart } = cart.reduce((acc, item) => {
+        const supplier = item.supplier;
+        if (!acc[supplier]) {
+            acc[supplier] = [];
+        }
+        acc[supplier].push(item);
+        return acc;
+    }, {} as { [key: string]: typeof cart });
+
+    Object.entries(ordersBySupplier).forEach(([supplier, items]) => {
+      const orderTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      db.orders.create({
+        vendorName: "Tasty Tacos Stand", // Hardcoded for prototype
+        date: new Date().toISOString().split('T')[0],
+        total: orderTotal,
+        status: "pending",
+        items: items.map(item => ({ id: item.id, name: item.name, quantity: item.quantity, price: item.price })),
+        supplier: supplier,
+      });
+    });
     
     toast({
       title: "Order Placed!",

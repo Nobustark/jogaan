@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -13,64 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Check, Truck } from "lucide-react";
-
-type OrderStatus = "pending" | "preparing" | "out_for_delivery" | "delivered";
-
-type OrderItem = {
-  id: string;
-  name: string;
-  quantity: number;
-};
-
-type Order = {
-  id: string;
-  vendorName: string;
-  date: string;
-  total: number;
-  status: OrderStatus;
-  items: OrderItem[];
-};
-
-const initialOrders: Order[] = [
-  {
-    id: "ORD-001",
-    vendorName: "Tasty Tacos Stand",
-    date: "2024-07-28",
-    total: 45.75,
-    status: "pending",
-    items: [
-      { id: "1", name: "Fresh Tomatoes", quantity: 5 },
-      { id: "2", name: "Onions", quantity: 10 },
-    ],
-  },
-  {
-    id: "ORD-002",
-    vendorName: "Noodle Nirvana",
-    date: "2024-07-28",
-    total: 88.0,
-    status: "preparing",
-    items: [
-      { id: "3", name: "Basmati Rice", quantity: 2 },
-      { id: "6", name: "Canola Oil (5L)", quantity: 1 },
-    ],
-  },
-  {
-    id: "ORD-003",
-    vendorName: "Sizzling Skewers",
-    date: "2024-07-27",
-    total: 120.5,
-    status: "out_for_delivery",
-    items: [{ id: "4", name: "Chicken Breast (kg)", quantity: 10 }],
-  },
-    {
-    id: "ORD-004",
-    vendorName: "Burger Bonanza",
-    date: "2024-07-26",
-    total: 75.0,
-    status: "delivered",
-    items: [{ id: "p-onion", name: "Onions", quantity: 5 }, { id: 'p-tomato', name: 'Tomatoes', quantity: 5}],
-  },
-];
+import db, { type Order, type OrderStatus } from "@/lib/db";
 
 const getStatusBadge = (status: OrderStatus) => {
   switch (status) {
@@ -82,15 +25,36 @@ const getStatusBadge = (status: OrderStatus) => {
       return <Badge className="bg-blue-500">Out for Delivery</Badge>;
     case "delivered":
       return <Badge className="bg-green-600">Delivered</Badge>;
+    case "completed":
+        return <Badge className="bg-green-600">Completed</Badge>;
   }
 };
 
 
 export default function SupplierOrdersPage() {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    // Hardcoded for prototype, assuming current supplier is "Veggie Co."
+     setOrders(db.orders.findMany().filter(o => o.supplier === 'Veggie Co.'));
+  }, []);
 
   const handleUpdateStatus = (orderId: string, newStatus: OrderStatus) => {
-     setOrders(orders.map(o => o.id === orderId ? {...o, status: newStatus} : o));
+     db.orders.update(orderId, { status: newStatus });
+     setOrders(db.orders.findMany().filter(o => o.supplier === 'Veggie Co.'));
+
+     if (newStatus === 'out_for_delivery') {
+         const order = db.orders.findMany().find(o => o.id === orderId);
+         if (order) {
+            db.deliveryTasks.create({
+                orderId: order.id,
+                pickup: order.supplier,
+                dropoff: order.vendorName,
+                fee: Math.round(order.total * 0.15 * 100) / 100, // 15% delivery fee
+                status: 'pending'
+            });
+         }
+     }
   };
 
 

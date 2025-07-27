@@ -4,14 +4,8 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/hooks/use-cart";
+import { Product } from "@/lib/db";
 
-export type Product = {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  supplier: string;
-};
 
 type ProductCardProps = {
   product: Product;

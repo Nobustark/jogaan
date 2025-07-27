@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,62 +12,30 @@ import {
 } from "@/components/ui/card";
 import { CheckCircle, Truck, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-type DeliveryStatus = "pending" | "in_progress" | "completed";
-
-type DeliveryTask = {
-  id: string;
-  orderId: string;
-  pickup: string;
-  dropoff: string;
-  status: DeliveryStatus;
-  fee: number;
-};
-
-const initialTasks: DeliveryTask[] = [
-  {
-    id: "1",
-    orderId: "ORD-001",
-    pickup: "Central Wholesale Market",
-    dropoff: "Tasty Tacos Stand",
-    status: "pending",
-    fee: 12.5,
-  },
-  {
-    id: "2",
-    orderId: "ORD-002",
-    pickup: "Spice & Grain Emporium",
-    dropoff: "Noodle Nirvana",
-    status: "pending",
-    fee: 8.75,
-  },
-  {
-    id: "3",
-    orderId: "ORD-003",
-    pickup: "Farm Fresh Vegetables",
-    dropoff: "Sizzling Skewers",
-    status: "in_progress",
-    fee: 15.0,
-  },
-   {
-    id: "4",
-    orderId: "ORD-004",
-    pickup: "The Meat Locker",
-    dropoff: "Burger Bonanza",
-    status: "completed",
-    fee: 10.20,
-  },
-];
+import db, { type DeliveryTask, type DeliveryStatus } from "@/lib/db";
 
 export default function RunnerDashboard() {
-  const [tasks, setTasks] = useState<DeliveryTask[]>(initialTasks);
+  const [tasks, setTasks] = useState<DeliveryTask[]>([]);
+
+  useEffect(() => {
+    // Fetch all available tasks that are not yet completed
+    setTasks(db.deliveryTasks.findMany().filter(t => t.status !== 'completed'));
+  }, []);
 
   const handleTaskAction = (taskId: string, newStatus: DeliveryStatus) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, status: newStatus } : task
-      )
-    );
+    const updatedTask = db.deliveryTasks.update(taskId, { status: newStatus });
+    if(updatedTask) {
+        // If the task is completed, remove it from the view
+        if (newStatus === 'completed') {
+             setTasks(tasks.filter((task) => task.id !== taskId));
+        } else {
+            setTasks(
+              tasks.map((task) =>
+                task.id === taskId ? { ...task, status: newStatus } : task
+              )
+            );
+        }
+    }
   };
 
   const getStatusBadge = (status: DeliveryStatus) => {

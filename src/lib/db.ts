@@ -1,0 +1,146 @@
+// A simple in-memory database for prototyping purposes.
+
+export type Product = {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+  description: string;
+  supplier: string; // Supplier Name
+};
+
+export type OrderItem = {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+};
+
+export type OrderStatus = "pending" | "preparing" | "out_for_delivery" | "delivered" | "completed";
+
+export type Order = {
+  id: string;
+  vendorName: string;
+  date: string;
+  total: number;
+  status: OrderStatus;
+  items: OrderItem[];
+  supplier: string;
+};
+
+export type DeliveryStatus = "pending" | "in_progress" | "completed";
+
+export type DeliveryTask = {
+  id: string;
+  orderId: string;
+  pickup: string;
+  dropoff: string;
+  status: DeliveryStatus;
+  fee: number;
+};
+
+
+let products: Product[] = [
+  { id: "1", name: "Fresh Tomatoes", price: 2.50, quantity: 100, imageUrl: "https://placehold.co/600x400.png", supplier: "Green Farms", description: "Locally sourced, ripe red tomatoes." },
+  { id: "2", name: "Red Onions", price: 1.75, quantity: 250, imageUrl: "https://placehold.co/600x400.png", supplier: "Veggie Co.", description: "Fresh red and white onions." },
+  { id: "3", name: "Basmati Rice (20kg)", price: 15.00, quantity: 50, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags)." },
+  { id: "4", name: "Chicken Breast (kg)", price: 8.50, quantity: 10, imageUrl: "https://placehold.co/600x400.png", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast." },
+  { id: "5", name: "Garam Masala", price: 5.25, quantity: 80, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "Aromatic blend of ground spices." },
+  { id: "6", name: "Canola Oil (5L)", price: 22.00, quantity: 40, imageUrl: "https://placehold.co/600x400.png", supplier: "Veggie Co.", description: "Pure canola oil for all your cooking needs." },
+];
+
+let orders: Order[] = [
+    {
+    id: "ORD-001",
+    vendorName: "Tasty Tacos Stand",
+    date: "2024-07-28",
+    total: 45.75,
+    status: "pending",
+    items: [
+      { id: "1", name: "Fresh Tomatoes", quantity: 5, price: 2.50 },
+      { id: "2", name: "Onions", quantity: 10, price: 1.75 },
+    ],
+    supplier: "Green Farms",
+  },
+  {
+    id: "ORD-002",
+    vendorName: "Noodle Nirvana",
+    date: "2024-07-28",
+    total: 88.0,
+    status: "preparing",
+    items: [
+      { id: "3", name: "Basmati Rice", quantity: 2, price: 15.00 },
+      { id: "6", name: "Canola Oil (5L)", quantity: 1, price: 22.00 },
+    ],
+    supplier: "Spice & Grain",
+  },
+];
+
+let deliveryTasks: DeliveryTask[] = [
+   {
+    id: "DEL-001",
+    orderId: "ORD-003",
+    pickup: "The Meat Locker",
+    dropoff: "Sizzling Skewers",
+    status: "in_progress",
+    fee: 15.0,
+  },
+];
+
+
+const db = {
+  products: {
+    findMany: () => products,
+    create: (data: Omit<Product, 'id'>) => {
+      const newProduct = { ...data, id: String(products.length + 1) };
+      products.push(newProduct);
+      return newProduct;
+    },
+    delete: (id: string) => {
+        products = products.filter(p => p.id !== id);
+        return { success: true };
+    }
+  },
+  orders: {
+    findMany: () => orders,
+    create: (data: Omit<Order, 'id'>) => {
+       const newOrder = { ...data, id: `ORD-${String(orders.length + 1).padStart(3, '0')}` };
+       orders.push(newOrder);
+       return newOrder;
+    },
+    update: (id: string, data: Partial<Order>) => {
+        const orderIndex = orders.findIndex(o => o.id === id);
+        if (orderIndex > -1) {
+            orders[orderIndex] = { ...orders[orderIndex], ...data };
+            return orders[orderIndex];
+        }
+        return null;
+    }
+  },
+  deliveryTasks: {
+      findMany: () => deliveryTasks,
+      create: (data: Omit<DeliveryTask, 'id'>) => {
+          const newDelivery = { ...data, id: `DEL-${String(deliveryTasks.length + 1).padStart(3, '0')}` };
+          deliveryTasks.push(newDelivery);
+          return newDelivery;
+      },
+      update: (id: string, data: Partial<Pick<DeliveryTask, 'status'>>) => {
+          const taskIndex = deliveryTasks.findIndex(t => t.id === id);
+          if (taskIndex > -1) {
+              deliveryTasks[taskIndex] = { ...deliveryTasks[taskIndex], ...data };
+              
+              // Also update the main order status
+              const orderId = deliveryTasks[taskIndex].orderId;
+              if (data.status === 'completed') {
+                  db.orders.update(orderId, { status: 'delivered' });
+              }
+
+              return deliveryTasks[taskIndex];
+          }
+          return null;
+      }
+  }
+};
+
+export default db;

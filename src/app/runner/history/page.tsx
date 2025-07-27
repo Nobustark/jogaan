@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -6,46 +9,41 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import db, { type DeliveryTask } from "@/lib/db";
 
-type Delivery = {
-  id: string;
-  orderId: string;
-  date: string;
-  pickup: string;
-  dropoff: string;
-  fee: number;
-};
-
-const deliveries: Delivery[] = [
-  {
-    id: "1",
-    orderId: "ORD-004",
-    date: "2024-07-26",
-    pickup: "The Meat Locker",
-    dropoff: "Burger Bonanza",
-    fee: 10.2,
-  },
-  {
-    id: "2",
-    orderId: "ORD-005",
-    date: "2024-07-25",
-    pickup: "Spice & Grain Emporium",
-    dropoff: "Sizzling Skewers",
-    fee: 9.5,
-  },
-  {
-    id: "3",
-    orderId: "ORD-006",
-    date: "2024-07-24",
-    pickup: "Farm Fresh Vegetables",
-    dropoff: "Tasty Tacos Stand",
-    fee: 11.0,
-  },
-];
 
 export default function RunnerHistoryPage() {
+  const [deliveries, setDeliveries] = useState<DeliveryTask[]>([]);
+
+  useEffect(() => {
+    // Fetch completed deliveries from the database
+    const allTasks = db.deliveryTasks.findMany();
+    const completedTasks = allTasks.filter(task => task.status === 'completed');
+    
+    // Add some hardcoded history for demo purposes
+    const hardcodedHistory: DeliveryTask[] = [
+        {
+            id: "hist-1",
+            orderId: "ORD-004",
+            pickup: "The Meat Locker",
+            dropoff: "Burger Bonanza",
+            fee: 10.2,
+            status: "completed"
+        },
+        {
+            id: "hist-2",
+            orderId: "ORD-005",
+            pickup: "Spice & Grain Emporium",
+            dropoff: "Sizzling Skewers",
+            fee: 9.5,
+            status: "completed"
+        }
+    ];
+
+    setDeliveries([...completedTasks, ...hardcodedHistory]);
+  }, []);
+
   return (
     <Card>
       <CardHeader>
@@ -58,7 +56,6 @@ export default function RunnerHistoryPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Order ID</TableHead>
-                <TableHead>Date</TableHead>
                 <TableHead>Route</TableHead>
                 <TableHead className="text-right">Fee</TableHead>
               </TableRow>
@@ -67,7 +64,6 @@ export default function RunnerHistoryPage() {
               {deliveries.map((delivery) => (
                 <TableRow key={delivery.id}>
                   <TableCell className="font-medium">{delivery.orderId}</TableCell>
-                  <TableCell>{delivery.date}</TableCell>
                   <TableCell>{delivery.pickup} → {delivery.dropoff}</TableCell>
                   <TableCell className="text-right font-medium text-primary">${delivery.fee.toFixed(2)}</TableCell>
                 </TableRow>

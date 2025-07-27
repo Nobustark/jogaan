@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -12,47 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Eye } from "lucide-react";
-
-type OrderStatus = "pending" | "preparing" | "out_for_delivery" | "delivered";
-
-type Order = {
-  id: string;
-  date: string;
-  total: number;
-  status: OrderStatus;
-  supplier: string;
-};
-
-const orders: Order[] = [
-  {
-    id: "ORD-001",
-    date: "2024-07-28",
-    total: 45.75,
-    status: "pending",
-    supplier: "Green Farms",
-  },
-  {
-    id: "ORD-002",
-    date: "2024-07-28",
-    total: 88.0,
-    status: "preparing",
-    supplier: "Spice & Grain",
-  },
-  {
-    id: "ORD-003",
-    date: "2024-07-27",
-    total: 120.5,
-    status: "out_for_delivery",
-    supplier: "The Meat Locker",
-  },
-    {
-    id: "ORD-004",
-    date: "2024-07-26",
-    total: 75.0,
-    status: "delivered",
-    supplier: "Veggie Co.",
-  },
-];
+import db, { type Order, type OrderStatus } from "@/lib/db";
 
 const getStatusBadge = (status: OrderStatus) => {
   switch (status) {
@@ -64,11 +25,21 @@ const getStatusBadge = (status: OrderStatus) => {
       return <Badge className="bg-blue-500">Out for Delivery</Badge>;
     case "delivered":
       return <Badge className="bg-green-600">Delivered</Badge>;
+    case "completed":
+        return <Badge className="bg-green-600">Completed</Badge>;
   }
 };
 
 
 export default function VendorOrdersPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    // In a real app, this would be filtered by the logged-in vendor's ID.
+    // For now, we'll show orders for "Tasty Tacos Stand"
+    setOrders(db.orders.findMany().filter(o => o.vendorName === "Tasty Tacos Stand"));
+  }, []);
+
   return (
      <Card>
       <CardHeader>

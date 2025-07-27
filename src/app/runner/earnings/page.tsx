@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   Table,
@@ -17,16 +18,8 @@ import {
 } from "@/components/ui/chart"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { TrendingUp } from "lucide-react";
+import db, { type DeliveryTask } from "@/lib/db";
 
-const recentEarnings = [
-  { date: "2024-07-22", amount: 45.50 },
-  { date: "2024-07-23", amount: 52.30 },
-  { date: "2024-07-24", amount: 65.10 },
-  { date: "2024-07-25", amount: 48.90 },
-  { date: "2024-07-26", amount: 72.00 },
-  { date: "2024-07-27", amount: 58.60 },
-  { date: "2024-07-28", amount: 75.40 },
-]
 
 const chartConfig = {
   earnings: {
@@ -36,7 +29,32 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function RunnerEarningsPage() {
-  const totalEarnings = recentEarnings.reduce((acc, curr) => acc + curr.amount, 0);
+  const [completedTasks, setCompletedTasks] = useState<DeliveryTask[]>([]);
+  
+  useEffect(() => {
+    // In a real app, you'd fetch this from your backend for the logged in user
+    const allTasks = db.deliveryTasks.findMany();
+    const hardcodedHistory: DeliveryTask[] = [
+        { id: "hist-1", orderId: "ORD-004", pickup: "", dropoff: "", fee: 10.2, status: "completed" },
+        { id: "hist-2", orderId: "ORD-005", pickup: "", dropoff: "", fee: 9.5, status: "completed" }
+    ];
+    setCompletedTasks([...allTasks.filter(t => t.status === 'completed'), ...hardcodedHistory]);
+  }, []);
+
+  const totalEarnings = completedTasks.reduce((acc, curr) => acc + curr.fee, 0);
+  const deliveriesThisWeek = completedTasks.length; // Simplified for demo
+  const averageFee = deliveriesThisWeek > 0 ? totalEarnings / deliveriesThisWeek : 0;
+
+  // Mock chart data
+  const recentEarnings = [
+    { date: "2024-07-22", amount: 45.50 },
+    { date: "2024-07-23", amount: 52.30 },
+    { date: "2024-07-24", amount: 65.10 },
+    { date: "2024-07-25", amount: 48.90 },
+    { date: "2024-07-26", amount: 72.00 },
+    { date: "2024-07-27", amount: 58.60 },
+    { date: "2024-07-28", amount: totalEarnings > 75 ? totalEarnings : 75.40 }, // Use real data if available
+  ]
 
   return (
     <div className="space-y-6">
@@ -50,13 +68,13 @@ export default function RunnerEarningsPage() {
          <Card>
           <CardHeader>
             <CardDescription>Deliveries This Week</CardDescription>
-            <CardTitle className="font-headline text-4xl">34</CardTitle>
+            <CardTitle className="font-headline text-4xl">{deliveriesThisWeek}</CardTitle>
           </CardHeader>
         </Card>
          <Card>
           <CardHeader>
             <CardDescription>Average Fee</CardDescription>
-            <CardTitle className="font-headline text-4xl">${(totalEarnings / 34).toFixed(2)}</CardTitle>
+            <CardTitle className="font-headline text-4xl">${averageFee.toFixed(2)}</CardTitle>
           </CardHeader>
         </Card>
       </div>

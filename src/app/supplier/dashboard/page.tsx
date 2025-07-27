@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Table,
@@ -26,53 +26,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Edit, PlusCircle, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-  description: string;
-};
-
-const initialProducts: Product[] = [
-  {
-    id: "1",
-    name: "Fresh Tomatoes",
-    price: 2.5,
-    quantity: 100,
-    imageUrl: "https://placehold.co/400x400.png",
-    description: "Locally sourced, ripe red tomatoes.",
-  },
-  {
-    id: "2",
-    name: "Onions",
-    price: 1.5,
-    quantity: 250,
-    imageUrl: "https://placehold.co/400x400.png",
-    description: "Fresh red and white onions.",
-  },
-  {
-    id: "3",
-    name: "Basmati Rice",
-    price: 15,
-    quantity: 50,
-    imageUrl: "https://placehold.co/400x400.png",
-    description: "Premium long-grain basmati rice (20kg bags).",
-  },
-  {
-    id: "4",
-    name: "Garam Masala",
-    price: 5,
-    quantity: 80,
-    imageUrl: "https://placehold.co/400x400.png",
-    description: "Aromatic blend of ground spices.",
-  },
-];
+import db, { type Product } from '@/lib/db';
 
 export default function SupplierDashboard() {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
 
@@ -80,6 +37,12 @@ export default function SupplierDashboard() {
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductQuantity, setNewProductQuantity] = useState("");
+
+  useEffect(() => {
+    // For this prototype, we assume the supplier is "Veggie Co."
+    // In a real app, you'd get this from the user's session.
+    setProducts(db.products.findMany().filter(p => p.supplier === 'Veggie Co.'));
+  }, []);
 
 
   const handleAddProduct = () => {
@@ -92,16 +55,16 @@ export default function SupplierDashboard() {
       return;
     }
 
-    const newProduct: Product = {
-      id: (products.length + 1).toString(),
+    const newProduct = db.products.create({
       name: newProductName,
       price: parseFloat(newProductPrice),
       quantity: parseInt(newProductQuantity, 10),
       description: newProductDescription,
       imageUrl: "https://placehold.co/400x400.png",
-    };
+      supplier: 'Veggie Co.' // Hardcoded for prototype
+    });
 
-    setProducts([...products, newProduct]);
+    setProducts(prev => [...prev, newProduct]);
     
     // Reset fields and close dialog
     setNewProductName("");
@@ -115,6 +78,15 @@ export default function SupplierDashboard() {
       description: `${newProduct.name} has been added to your listings.`,
     });
   };
+
+  const handleDeleteProduct = (productId: string) => {
+    db.products.delete(productId);
+    setProducts(prev => prev.filter(p => p.id !== productId));
+    toast({
+        title: "Product Deleted",
+        description: "The product has been removed from your listings.",
+    });
+  }
 
   return (
     <div className="space-y-4">
@@ -191,10 +163,10 @@ export default function SupplierDashboard() {
                   <Badge variant="outline">{product.quantity} in stock</Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button variant="ghost" size="icon" className="mr-2">
+                  <Button variant="ghost" size="icon" className="mr-2" disabled>
                     <Edit className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                  <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => handleDeleteProduct(product.id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </TableCell>
