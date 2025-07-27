@@ -16,7 +16,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { TrendUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 const recentEarnings = [
   { date: "2024-07-22", amount: 45.50 },
@@ -64,7 +64,7 @@ export default function RunnerEarningsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="font-headline flex items-center">
-            <TrendUp className="mr-2 h-5 w-5"/> Weekly Earnings
+            <TrendingUp className="mr-2 h-5 w-5"/> Weekly Earnings
           </CardTitle>
           <CardDescription>Your earnings over the last 7 days.</CardDescription>
         </CardHeader>
