@@ -34,14 +34,21 @@ const getStatusBadge = (status: OrderStatus) => {
 export default function SupplierOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
 
-  useEffect(() => {
-    // Hardcoded for prototype, assuming current supplier is "Veggie Co."
+  const fetchOrders = () => {
+     // Hardcoded for prototype, assuming current supplier is "Veggie Co."
      setOrders(db.orders.findMany().filter(o => o.supplier === 'Veggie Co.'));
+  };
+
+  useEffect(() => {
+    fetchOrders();
+    // Poll for changes to reflect updates from other parts of the app
+    const interval = setInterval(fetchOrders, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleUpdateStatus = (orderId: string, newStatus: OrderStatus) => {
      db.orders.update(orderId, { status: newStatus });
-     setOrders(db.orders.findMany().filter(o => o.supplier === 'Veggie Co.'));
+     fetchOrders();
 
      if (newStatus === 'out_for_delivery') {
          const order = db.orders.findMany().find(o => o.id === orderId);

@@ -17,31 +17,16 @@ export default function RunnerHistoryPage() {
   const [deliveries, setDeliveries] = useState<DeliveryTask[]>([]);
 
   useEffect(() => {
-    // Fetch completed deliveries from the database
-    const allTasks = db.deliveryTasks.findMany();
-    const completedTasks = allTasks.filter(task => task.status === 'completed');
-    
-    // Add some hardcoded history for demo purposes
-    const hardcodedHistory: DeliveryTask[] = [
-        {
-            id: "hist-1",
-            orderId: "ORD-004",
-            pickup: "The Meat Locker",
-            dropoff: "Burger Bonanza",
-            fee: 10.2,
-            status: "completed"
-        },
-        {
-            id: "hist-2",
-            orderId: "ORD-005",
-            pickup: "Spice & Grain Emporium",
-            dropoff: "Sizzling Skewers",
-            fee: 9.5,
-            status: "completed"
-        }
-    ];
-
-    setDeliveries([...completedTasks, ...hardcodedHistory]);
+    const fetchHistory = () => {
+        // Fetch completed deliveries from the database
+        const allTasks = db.deliveryTasks.findMany();
+        const completedTasks = allTasks.filter(task => task.status === 'completed');
+        setDeliveries(completedTasks);
+    };
+    fetchHistory();
+     // Poll for changes to reflect updates from other parts of the app
+    const interval = setInterval(fetchHistory, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -68,6 +53,11 @@ export default function RunnerHistoryPage() {
                   <TableCell className="text-right font-medium text-primary">${delivery.fee.toFixed(2)}</TableCell>
                 </TableRow>
               ))}
+               {!deliveries.length && (
+                <TableRow>
+                    <TableCell colSpan={3} className="text-center text-muted-foreground">No completed deliveries yet.</TableCell>
+                </TableRow>
+               )}
             </TableBody>
           </Table>
         </div>

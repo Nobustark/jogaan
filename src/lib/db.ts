@@ -38,6 +38,7 @@ export type DeliveryTask = {
   dropoff: string;
   status: DeliveryStatus;
   fee: number;
+  date: string; // Added date for earnings tracking
 };
 
 
@@ -85,6 +86,7 @@ let deliveryTasks: DeliveryTask[] = [
     dropoff: "Sizzling Skewers",
     status: "in_progress",
     fee: 15.0,
+    date: new Date().toISOString().split('T')[0],
   },
 ];
 
@@ -120,8 +122,8 @@ const db = {
   },
   deliveryTasks: {
       findMany: () => deliveryTasks,
-      create: (data: Omit<DeliveryTask, 'id'>) => {
-          const newDelivery = { ...data, id: `DEL-${String(deliveryTasks.length + 1).padStart(3, '0')}` };
+      create: (data: Omit<DeliveryTask, 'id' | 'date'>) => {
+          const newDelivery = { ...data, id: `DEL-${String(deliveryTasks.length + 1).padStart(3, '0')}`, date: new Date().toISOString().split('T')[0] };
           deliveryTasks.push(newDelivery);
           return newDelivery;
       },

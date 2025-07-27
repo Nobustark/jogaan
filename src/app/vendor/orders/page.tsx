@@ -34,10 +34,17 @@ const getStatusBadge = (status: OrderStatus) => {
 export default function VendorOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
 
-  useEffect(() => {
+  const fetchOrders = () => {
     // In a real app, this would be filtered by the logged-in vendor's ID.
     // For now, we'll show orders for "Tasty Tacos Stand"
     setOrders(db.orders.findMany().filter(o => o.vendorName === "Tasty Tacos Stand"));
+  };
+
+  useEffect(() => {
+    fetchOrders();
+    // Poll for changes to reflect updates from other parts of the app
+    const interval = setInterval(fetchOrders, 2000); 
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -74,6 +81,11 @@ export default function VendorOrdersPage() {
                 </TableCell>
               </TableRow>
             ))}
+             {!orders.length && (
+                <TableRow>
+                    <TableCell colSpan={6} className="text-center text-muted-foreground">You haven't placed any orders yet.</TableCell>
+                </TableRow>
+             )}
           </TableBody>
         </Table>
         </div>

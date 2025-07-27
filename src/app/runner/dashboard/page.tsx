@@ -17,24 +17,22 @@ import db, { type DeliveryTask, type DeliveryStatus } from "@/lib/db";
 export default function RunnerDashboard() {
   const [tasks, setTasks] = useState<DeliveryTask[]>([]);
 
-  useEffect(() => {
+  const fetchTasks = () => {
     // Fetch all available tasks that are not yet completed
     setTasks(db.deliveryTasks.findMany().filter(t => t.status !== 'completed'));
+  };
+
+  useEffect(() => {
+    fetchTasks();
+    // Poll for changes to reflect new tasks being created
+    const interval = setInterval(fetchTasks, 2000); 
+    return () => clearInterval(interval);
   }, []);
 
   const handleTaskAction = (taskId: string, newStatus: DeliveryStatus) => {
     const updatedTask = db.deliveryTasks.update(taskId, { status: newStatus });
     if(updatedTask) {
-        // If the task is completed, remove it from the view
-        if (newStatus === 'completed') {
-             setTasks(tasks.filter((task) => task.id !== taskId));
-        } else {
-            setTasks(
-              tasks.map((task) =>
-                task.id === taskId ? { ...task, status: newStatus } : task
-              )
-            );
-        }
+       fetchTasks();
     }
   };
 
@@ -51,6 +49,7 @@ export default function RunnerDashboard() {
 
   return (
     <div className="space-y-6">
+       {!tasks.length && <p className="text-center text-muted-foreground">No available deliveries right now. Check back soon!</p>}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {tasks.map((task) => (
           <Card key={task.id} className="flex flex-col">
