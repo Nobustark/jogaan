@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background p-4 sm:p-6 md:p-8">
       <div className="text-center mb-12">
-        <div className="inline-block bg-primary p-4 rounded-full mb-4">
+        <div className="inline-block bg-primary p-4 rounded-full mb-4 shadow-lg">
           <CookingPot className="h-12 w-12 text-primary-foreground" />
         </div>
         <h1 className="text-5xl md:text-6xl font-extrabold text-foreground font-headline tracking-tighter">
@@ -27,7 +27,7 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
-        <Card className="flex flex-col transform hover:scale-105 transition-transform duration-300 shadow-lg">
+        <Card className="flex flex-col transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-2xl rounded-xl">
           <CardHeader className="items-center text-center">
             <div className="p-3 bg-secondary rounded-full mb-2">
               <Building className="h-8 w-8 text-secondary-foreground" />
@@ -43,13 +43,13 @@ export default function Home() {
           <CardFooter>
             <Button asChild className="w-full">
               <Link href="/supplier/login">
-                Supplier Login <ArrowRight className="ml-2" />
+                Supplier Portal <ArrowRight className="ml-2" />
               </Link>
             </Button>
           </CardFooter>
         </Card>
 
-        <Card className="flex flex-col transform hover:scale-105 transition-transform duration-300 shadow-lg border-2 border-primary">
+        <Card className="flex flex-col transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-2xl rounded-xl border-2 border-primary">
           <CardHeader className="items-center text-center">
             <div className="p-3 bg-primary rounded-full mb-2">
               <CookingPot className="h-8 w-8 text-primary-foreground" />
@@ -64,13 +64,13 @@ export default function Home() {
           <CardFooter>
             <Button asChild className="w-full">
               <Link href="/vendor/login">
-                Vendor Login <ArrowRight className="ml-2" />
+                Vendor Portal <ArrowRight className="ml-2" />
               </Link>
             </Button>
           </CardFooter>
         </Card>
 
-        <Card className="flex flex-col transform hover:scale-105 transition-transform duration-300 shadow-lg">
+        <Card className="flex flex-col transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-2xl rounded-xl">
           <CardHeader className="items-center text-center">
             <div className="p-3 bg-secondary rounded-full mb-2">
               <Bike className="h-8 w-8 text-secondary-foreground" />
@@ -87,7 +87,7 @@ export default function Home() {
           <CardFooter>
             <Button asChild className="w-full">
               <Link href="/runner/login">
-                Runner Login <ArrowRight className="ml-2" />
+                Runner Portal <ArrowRight className="ml-2" />
               </Link>
             </Button>
           </CardFooter>

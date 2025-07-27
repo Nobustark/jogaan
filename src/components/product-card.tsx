@@ -24,14 +24,14 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden transform hover:shadow-lg transition-shadow duration-300">
+    <Card className="overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 hover:shadow-xl rounded-lg group">
       <CardHeader className="p-0">
         <div className="relative aspect-video">
           <Image
             src={product.imageUrl}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
             data-ai-hint="food ingredient"
           />
         </div>

@@ -29,9 +29,9 @@ export function LoginForm({ role }: LoginFormProps) {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
-      <Card className="w-full max-w-sm mx-4">
+      <Card className="w-full max-w-sm mx-4 shadow-2xl rounded-2xl">
         <CardHeader className="text-center">
-          <div className="inline-block mx-auto bg-primary p-3 rounded-full mb-4">
+          <div className="inline-block mx-auto bg-primary p-3 rounded-full mb-4 shadow-lg">
             <CookingPot className="h-8 w-8 text-primary-foreground" />
           </div>
           <CardTitle className="font-headline text-2xl">{roleName} Login</CardTitle>
@@ -49,7 +49,7 @@ export function LoginForm({ role }: LoginFormProps) {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" size="lg">
               Login
             </Button>
           </CardFooter>
