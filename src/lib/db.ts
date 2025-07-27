@@ -53,16 +53,16 @@ export type DeliveryTask = {
 
 
 let products: Product[] = [
-  { id: "1", name: "Fresh Tomatoes", price: 200, quantity: 100, imageUrl: "https://placehold.co/600x400.png", supplier: "Green Farms", description: "Locally sourced, ripe red tomatoes.", rating: 4.5, reviews: [{rating: 5, comment: "Very fresh!", vendorName: "Tasty Tacos Stand", date: "2024-07-29"}] },
-  { id: "2", name: "Red Onions", price: 140, quantity: 250, imageUrl: "https://placehold.co/600x400.png", supplier: "Veggie Co.", description: "Fresh red and white onions.", rating: 4.8, reviews: [] },
-  { id: "3", name: "Basmati Rice (20kg)", price: 1200, quantity: 50, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags).", rating: 4.2, reviews: [] },
-  { id: "4", name: "Chicken Breast (kg)", price: 680, quantity: 10, imageUrl: "https://placehold.co/600x400.png", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast.", rating: 4.9, reviews: [] },
-  { id: "5", name: "Garam Masala", price: 420, quantity: 80, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "Aromatic blend of ground spices.", rating: 4.6, reviews: [] },
-  { id: "6", name: "Canola Oil (5L)", price: 1760, quantity: 40, imageUrl: "https://placehold.co/600x400.png", supplier: "Veggie Co.", description: "Pure canola oil for all your cooking needs.", rating: 4.0, reviews: [] },
-  { id: "7", name: "Potatoes (bag)", price: 400, quantity: 150, imageUrl: "https://placehold.co/600x400.png", supplier: "Green Farms", description: "Versatile potatoes, perfect for fries or curries.", rating: 4.3, reviews: [] },
-  { id: "8", name: "Paneer (kg)", price: 720, quantity: 30, imageUrl: "https://placehold.co/600x400.png", supplier: "Dairy King", description: "Fresh, soft paneer for your vegetarian dishes.", rating: 4.7, reviews: [] },
-  { id: "9", name: "All-Purpose Flour (5kg)", price: 520, quantity: 100, imageUrl: "https://placehold.co/600x400.png", supplier: "Spice & Grain", description: "High-quality all-purpose flour.", rating: 4.5, reviews: [] },
-  { id: "10", name: "Lamb Mince (kg)", price: 960, quantity: 25, imageUrl: "https://placehold.co/600x400.png", supplier: "The Meat Locker", description: "Freshly ground lamb mince.", rating: 4.8, reviews: [] },
+  { id: "1", name: "Fresh Tomatoes", price: 200, quantity: 100, imageUrl: "https://placehold.co/600x400/FF6347/FFFFFF.png", supplier: "Green Farms", description: "Locally sourced, ripe red tomatoes.", rating: 4.5, reviews: [{rating: 5, comment: "Very fresh!", vendorName: "Tasty Tacos Stand", date: "2024-07-29"}] },
+  { id: "2", name: "Red Onions", price: 140, quantity: 250, imageUrl: "https://placehold.co/600x400/8A2BE2/FFFFFF.png", supplier: "Veggie Co.", description: "Fresh red and white onions.", rating: 4.8, reviews: [] },
+  { id: "3", name: "Basmati Rice (20kg)", price: 1200, quantity: 50, imageUrl: "https://placehold.co/600x400/F5DEB3/000000.png", supplier: "Spice & Grain", description: "Premium long-grain basmati rice (20kg bags).", rating: 4.2, reviews: [] },
+  { id: "4", name: "Chicken Breast (kg)", price: 680, quantity: 10, imageUrl: "https://placehold.co/600x400/FFF8DC/000000.png", supplier: "The Meat Locker", description: "Fresh, free-range chicken breast.", rating: 4.9, reviews: [] },
+  { id: "5", name: "Garam Masala", price: 420, quantity: 80, imageUrl: "https://placehold.co/600x400/D2B48C/000000.png", supplier: "Spice & Grain", description: "Aromatic blend of ground spices.", rating: 4.6, reviews: [] },
+  { id: "6", name: "Canola Oil (5L)", price: 1760, quantity: 40, imageUrl: "https://placehold.co/600x400/FFFFE0/000000.png", supplier: "Veggie Co.", description: "Pure canola oil for all your cooking needs.", rating: 4.0, reviews: [] },
+  { id: "7", name: "Potatoes (bag)", price: 400, quantity: 150, imageUrl: "https://placehold.co/600x400/966919/FFFFFF.png", supplier: "Green Farms", description: "Versatile potatoes, perfect for fries or curries.", rating: 4.3, reviews: [] },
+  { id: "8", name: "Paneer (kg)", price: 720, quantity: 30, imageUrl: "https://placehold.co/600x400/F5F5F5/000000.png", supplier: "Dairy King", description: "Fresh, soft paneer for your vegetarian dishes.", rating: 4.7, reviews: [] },
+  { id: "9", name: "All-Purpose Flour (5kg)", price: 520, quantity: 100, imageUrl: "https://placehold.co/600x400/FAFAFA/000000.png", supplier: "Spice & Grain", description: "High-quality all-purpose flour.", rating: 4.5, reviews: [] },
+  { id: "10", name: "Lamb Mince (kg)", price: 960, quantity: 25, imageUrl: "https://placehold.co/600x400/DC143C/FFFFFF.png", supplier: "The Meat Locker", description: "Freshly ground lamb mince.", rating: 4.8, reviews: [] },
 ];
 
 let orders: Order[] = [
